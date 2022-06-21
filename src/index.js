@@ -18,9 +18,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-form.addEventListener("submit", addToy)
-function addToy(event) {
-  console.log(event.target)
+form.addEventListener("submit", addNewToy);
+
+function addNewToy(event) {
+  //A POST request should be sent to http://localhost:3000/toys and the new toy added to Andy's Toy Collection.
+  event.preventDefault();
+  console.log(event.target.name.value)
+  console.log(event.target.image.value)
+  fetch(url, {
+    method: "POST",
+    headers:
+    {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      "name": event.target.name.value,
+      "image": event.target.image.value,
+      "likes": 0
+    })
+  })
+    .then(response => response.json())
+    .then((response) => console.log(response))
 }
 function renderToys() {
   //When the page loads, make a 'GET' request to fetch all the toy objects.
