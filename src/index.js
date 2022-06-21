@@ -74,7 +74,20 @@ function renderToys() {
       })
     });
   function clickLike(event) {
-    console.log(event.target)
+    //capture that toy's id,
+    const id = event.target.getAttribute("id")
+    //calculate the new number of likes,
+    fetch(`${url}/${id}`, {
+      method: "PATCH",
+      body:JSON.stringify({likes:+1})
+      ,
+      headers: {"Content-type": "application/json; charset=UTF-8"}
+    })
+    .then(res => res.json())
+    .then(res => console.log(res))
+    //submit the patch request, and
+    //update the toy's card in the DOM based on the Response returned by the fetch request.
+
   }
   // With the response data, make a <div class="card"> for each toy 
   // add it to the toy-collection div.
